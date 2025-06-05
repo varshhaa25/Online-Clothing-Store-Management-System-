@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category|title }} Collection</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="bg-container"></div>
+    <div class="header-bar">
+        <div class="header-left">
+            <a href="{% url 'main_page' %}">🏠 Home</a>
+        </div>
+        <div class="header-right">
+            <a href="{% url 'cart_page' %}">🛒 Cart</a>
+            <a href="{% url 'order_summary' %}">📦 Orders</a>
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleDropdown()">Filter</button>
+                <div id="dropdownMenu" class="dropdown-content">
+                    <a href="?sort=asc">⬆ Price: Low to High</a>
+                    <a href="?sort=desc">⬇ Price: High to Low</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>{{ category|title }} Collection</h2>
+        
+        {% if products %}
+            <div class="product-container">  <!-- Added a wrapper for flexbox -->
+                {% for product in products %}
+                    <div class="product">
+                        <h3>{{ product.name }}</h3> <!-- Fixed typo -->
+                        <p>Price: ${{ product.price }}</p>
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        <br>
+                        <form method="post" action="{% url 'add_to_cart' product.id %}">
+                            {% csrf_token %}
+                            <label for="quantity">Quantity:</label>
+                            <select name="quantity" id="quantity">
+                                {% for i in "12345" %}
+                                    <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit">🛒 Add to Cart</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div> <!-- Closing product-container -->
+        {% else %}
+            <p>No products available in this category.</p>
+        {% endif %}
+    </div>
+    <script>
+        function toggleDropdown() {
+            var dropdown = document.getElementById("dropdownMenu");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+        
+        // Close dropdown if clicked outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdown = document.getElementById("dropdownMenu");
+                if (dropdown.style.display === "block") {
+                    dropdown.style.display = "none";
+                }
+            }
+        };
+    </script>
+        
+</body>
+</html>

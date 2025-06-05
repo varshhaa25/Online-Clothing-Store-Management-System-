@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <style>
+        
+        body { font-family: Arial, sans-serif; padding: 20px; background: url("{% static 'images/bckground.jpg' %}"); /* Ensure correct path */
+        background-size: cover;}
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px gray; }
+        .button { display: block; margin-top: 20px; padding: 10px; background: green; color: white; text-align: center; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Order Summary</h1>
+
+        <ul>
+            {% for item in order_items %}
+                <li>
+                    <strong>{{ item.name }}</strong> - 
+                    ${{ item.price }} × {{ item.quantity }} = ${{ item.total }}
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h3>Total Price: ${{ total_price }}</h3>
+
+        <a href="{% url 'payment_page' %}" class="button">💳 Proceed to Payment</a>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,29 @@
+{% load static %}
+<body>
+<div class="container">    
+<form action="{% url 'add_product' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Name:</label><input type="text" name="name" required><br>
+    <label>Category:</label>
+    <select name="category">
+        <option value="Men">Men</option>
+        <option value="Women">Women</option>
+        <option value="Kids">Kids</option>
+    </select><br>
+    <label>Price:</label><input type="number" name="price" required><br>
+    <label>Description:</label><textarea name="description"></textarea><br>
+    <label>Image:</label><input type="file" name="image" required><br>
+    <button type="submit" class="button">Add Product</button>
+</form>
+</div>
+</body>
+<head>
+    <style>
+        
+        body { font-family: Arial, sans-serif; padding: 20px; background: url("{% static 'images/bckground.jpg' %}"); /* Ensure correct path */
+        background-size: cover;}
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px gray; }
+        .button { display: block; margin-top: 20px; padding: 10px; background: green; color: white; text-align: center; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+

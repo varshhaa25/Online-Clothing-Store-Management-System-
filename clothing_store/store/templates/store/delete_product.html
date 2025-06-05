@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Product</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px;background: url("{% static 'images/bckground.jpg' %}"); /* Ensure correct path */
+        background-size: cover; }
+    </style>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px gray; }
+        .product { border-bottom: 1px solid #ddd; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; }
+        button { background-color: red; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 5px; }
+        img { max-width: 100px; }
+    </style>
+</head>
+<body>
+    <div class="bg-container"></div> 
+
+    <div class="container">
+        <h1>Delete a Product</h1>
+        <p>Select a product to remove it from the store.</p>
+
+        {% for product in products %}
+            <div class="product">
+                <div>
+                    <h3>{{ product.name }}</h3>
+                    <p>Price: ${{ product.price }}</p>
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                </div>
+                <form method="post" action="{% url 'delete_product' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        {% empty %}
+            <p>No products available to delete.</p>
+        {% endfor %}
+        
+        <br>
+        <a href="{% url 'main_page' %}">⬅️ Back to Main Page</a>
+    </div>
+
+</body>
+</html>

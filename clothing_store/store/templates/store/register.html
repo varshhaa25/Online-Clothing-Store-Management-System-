@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register</title>
+    <style>
+        
+        body { font-family: Arial, sans-serif; padding: 20px; background: url("{% static 'images/bckground.jpg' %}"); /* Ensure correct path */
+        background-size: cover;}
+        .container { max-width: 600px; margin: auto; background: rgb(251, 245, 237); padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px gray; }
+        .button { display: block; margin-top: 20px; padding: 10px; background: green; color: white; text-align: center; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+    <h2>Register</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+</body>
+</html>
